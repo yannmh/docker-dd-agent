@@ -3,10 +3,10 @@ FROM debian:jessie
 MAINTAINER Datadog <package@datadoghq.com>
 
 ENV DOCKER_DD_AGENT yes
-ENV AGENT_VERSION 1:5.4.6-1
+ENV AGENT_VERSION 1:5.5.0.git.304.1cac163-1
 
 # Install the Agent
-RUN echo "deb http://apt.datadoghq.com/ docker main" > /etc/apt/sources.list.d/datadog.list \
+RUN echo "deb http://apt.datad0g.com/ docker main" > /etc/apt/sources.list.d/datadog.list \
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7A7DA52 \
  && apt-get update \
  && apt-get install --no-install-recommends -y datadog-agent="${AGENT_VERSION}" \
@@ -29,7 +29,7 @@ RUN mv /etc/dd-agent/datadog.conf.example /etc/dd-agent/datadog.conf \
  && rm /etc/dd-agent/conf.d/network.yaml.default
 
 # Add Docker check
-COPY conf.d/docker.yaml /etc/dd-agent/conf.d/docker.yaml
+COPY conf.d/docker_daemon.yaml /etc/dd-agent/conf.d/docker_daemon.yaml
 
 COPY entrypoint.sh /entrypoint.sh
 
