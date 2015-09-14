@@ -4,14 +4,10 @@ MAINTAINER Datadog <package@datadoghq.com>
 
 ENV DOCKER_DD_AGENT yes
 ENV AGENT_VERSION 1:5.4.6-1
-
+ENV AGENT_URL https://circle-artifacts.com/gh/DataDog/docker-dd-agent-build-deb-x64/446/artifacts/0/home/ubuntu/docker-dd-agent-build-deb-x64/pkg/datadog-agent_5.5.0.git.283.7efba53-1_amd64.deb
 # Install the Agent
-RUN echo "deb http://apt.datadoghq.com/ docker main" > /etc/apt/sources.list.d/datadog.list \
- && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C7A7DA52 \
- && apt-get update \
- && apt-get install --no-install-recommends -y datadog-agent="${AGENT_VERSION}" \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ADD $AGENT_URL /
+RUN dpkg -i /*amd64.deb && rm /*amd64.deb
 
 # Configure the Agent
 # 1. Listen to statsd from other containers
